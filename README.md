@@ -90,11 +90,13 @@ Create a scalable system suitable for web and mobile platforms
 📱 Mobile Expansion
 
 The frontend is designed to be migrated to React Native with minimal changes.
+
 The backend and AI services remain unchanged, enabling rapid mobile deployment.
 
 👤 Author
 
 Developed by Hiba Ahmedh.
+
 Background: Web Development | AI & Machine Learning Enthusiast
 
 📄 License
