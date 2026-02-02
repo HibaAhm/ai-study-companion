@@ -65,7 +65,30 @@ Backend API (Node.js + Express)
 MongoDB Database
         ↓
 AI Services & ML Microservice (Python/FastAPI)
+## 🏗️ System Architecture
 
+### High-Level Overview
+![System Architecture](architecture.drawio)
+
+### Components Overview
+
+| Layer | Technology | Purpose | Hosting |
+|-------|------------|---------|---------|
+| **Frontend** | React + TypeScript + Tailwind | User interface, note upload, AI interactions | Vercel |
+| **Backend** | Node.js + Express + TypeScript | REST API, authentication, business logic | Render/Railway |
+| **Database** | MongoDB Atlas | Store users, notes, quizzes, progress | MongoDB Cloud |
+| **AI Service** | OpenAI API (GPT-3.5/4) | Summarization, Q&A, quiz generation | OpenAI |
+| **File Storage** | Local (dev) / AWS S3 (prod) | Store uploaded PDFs and extracted text | Local/AWS |
+| **ML Service** | Python + FastAPI + scikit-learn | Recommendations, weak topic detection | Render |
+
+### Data Flow
+1. **User → Frontend**: HTTP/HTTPS requests from browser
+2. **Frontend → Backend**: REST API calls with JWT authentication
+3. **Backend → Database**: Data persistence via Mongoose ODM
+4. **Backend → OpenAI**: AI processing for summaries/quizzes
+5. **Backend → ML Service**: Analytics and recommendations (Phase 2)
+
+### API Endpoints (Planned)
 
 This modular design ensures scalability, maintainability, and easy transition to mobile platforms.
 
