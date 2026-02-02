@@ -67,28 +67,56 @@ MongoDB Database
 AI Services & ML Microservice (Python/FastAPI)
 ## 🏗️ System Architecture
 
-### High-Level Overview
-![System Architecture](architecture.drawio)
+```mermaid
+graph TB
+    User[👤 Student User] -->|HTTP/HTTPS| Frontend
+    Frontend[🎨 Frontend<br/>React + TypeScript<br/>Vercel] -->|REST API + JWT| Backend
+    Backend[⚙️ Backend API<br/>Node.js + Express<br/>Render] -->|Mongoose ODM| Database
+    Backend -->|AI API Calls| OpenAI[🧠 OpenAI API]
+    Backend -->|File Operations| Storage[📁 File Storage<br/>S3/Local]
+    Backend -.->|Future| ML[📈 ML Service<br/>Python/FastAPI]
+    
+    style User fill:#BBDEFB
+    style Frontend fill:#F3E5F5
+    style Backend fill:#E8F5E8
+    style Database fill:#FFF3E0
+    style OpenAI fill:#E1F5FE
+    style Storage fill:#F5F5F5
+    style ML fill:#FFEBEE
+```
+
+### Detailed Architecture Diagram
+[![System Architecture](.github/assets/architecture.drawio)](.github/assets/architecture.drawio)
+
+*Click the diagram above to view/edit interactively on GitHub*
 
 ### Components Overview
 
-| Layer | Technology | Purpose | Hosting |
-|-------|------------|---------|---------|
-| **Frontend** | React + TypeScript + Tailwind | User interface, note upload, AI interactions | Vercel |
-| **Backend** | Node.js + Express + TypeScript | REST API, authentication, business logic | Render/Railway |
+| Component | Technology | Purpose | Hosting |
+|-----------|------------|---------|---------|
+| **Frontend** | React + TypeScript + Tailwind | User interface for note upload, chat, quizzes | Vercel |
+| **Backend API** | Node.js + Express + TypeScript | REST API, authentication, business logic | Render/Railway |
 | **Database** | MongoDB Atlas | Store users, notes, quizzes, progress | MongoDB Cloud |
 | **AI Service** | OpenAI API (GPT-3.5/4) | Summarization, Q&A, quiz generation | OpenAI |
-| **File Storage** | Local (dev) / AWS S3 (prod) | Store uploaded PDFs and extracted text | Local/AWS |
-| **ML Service** | Python + FastAPI + scikit-learn | Recommendations, weak topic detection | Render |
+| **File Storage** | Local (dev) / S3 (prod) | Store uploaded PDFs and extracted text | AWS/Local |
+| **ML Service** | Python + FastAPI | Recommendations & analytics (Phase 2) | Render |
 
 ### Data Flow
-1. **User → Frontend**: HTTP/HTTPS requests from browser
-2. **Frontend → Backend**: REST API calls with JWT authentication
-3. **Backend → Database**: Data persistence via Mongoose ODM
+1. **User → Frontend** (HTTP/HTTPS): User interacts with React app
+2. **Frontend → Backend** (REST API): API calls with JWT authentication
+3. **Backend → Database** (Mongoose): Data persistence operations
 4. **Backend → OpenAI**: AI processing for summaries/quizzes
-5. **Backend → ML Service**: Analytics and recommendations (Phase 2)
+5. **Backend → File Storage**: Upload/download PDF files
+6. **Backend → ML Service**: Analytics (Phase 2)
 
-### API Endpoints (Planned)
+### API Structure
+```
+/auth          POST   /register, /login, /logout
+/notes         GET    / (list), POST /upload, DELETE /:id
+/ai            POST   /summarize/:noteId, /chat/:noteId, /quiz/:noteId
+/quizzes       GET    /:id, POST /:id/submit
+/progress      GET    / (dashboard), GET /:topic
+```
 
 This modular design ensures scalability, maintainability, and easy transition to mobile platforms.
 
